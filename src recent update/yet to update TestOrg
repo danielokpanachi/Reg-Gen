@@ -1,0 +1,93 @@
+<template>
+  <div class="container">
+    <div>
+      <h2>Test Organizations</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Organization Name</th>
+            <th>Total Entries</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="org in uniqueOrgs" :key="org.name">
+            <td>{{ org.name }}</td>
+            <td>{{ org.count }}</td>
+            <td>
+              <button @click="viewOrganization(org.name)">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="goBack">Back</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import { store } from '@/store';
+
+export default {
+  name: 'TestOrganizations',
+  setup() {
+    return { store };
+  },
+  computed: {
+    // Group entries by organization name and count them
+    uniqueOrgs() {
+      const groups = {};
+      this.store.testOrganizations.forEach(entry => {
+        // Use the organization name as key (case-insensitive)
+        const key = entry.name.toLowerCase();
+        if (groups[key]) {
+          groups[key].count++;
+        } else {
+          // Clone the entry and add a count property
+          groups[key] = { ...entry, count: 1 };
+        }
+      });
+      return Object.values(groups);
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.push({ name: 'ReferenceGenerator' });
+    },
+    viewOrganization(orgName) {
+      this.$router.push({ name: 'ViewOrganization', params: { orgName } });
+    }
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  background-image: url('@/assets/bg-pic.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 8px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+th {
+  background-color: #f4f4f4;
+}
+button {
+  padding: 5px 10px;
+  background: purple;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
