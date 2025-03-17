@@ -6,10 +6,11 @@
     
     <div class="content">
       <!-- Left Sidebar -->
+      <div class="left-sidebar translucent-panel">
       <div class="left-sidebar">
-        <h3>Search Organisation</h3>
+        <h3>Add Organisation</h3>
         <div class="sidebar-search">
-          <input v-model="sidebarSearch" type="text" placeholder="Search organisation" class="sidebar-search-input" />
+          <input v-model="sidebarSearch" type="text" placeholder=" Add organisation" class="sidebar-search-input" />
           <button @click="addOrganization" class="add-btn">Add</button>
           <button @click="deleteOrganization" class="delete-btn">Delete</button>
         </div>
@@ -27,10 +28,11 @@
     <button @click="generateReference" class="generate-btn">Generate Reference</button>
     <div v-if="referenceNumber" class="generated-result">
       <h4>Generated Reference</h4>
-      <p>{{ referenceNumber }}</p>
+      <p>{{ RecipientTitle }}</p>
     </div>
-    <button @click="goToTestOrganizations">View Test Organizations</button>
+    <button class = "vtest" @click="goToTestOrganizations">View Test Organizations</button>
   </div>
+      </div>
 
 
 
@@ -91,7 +93,7 @@
       </div>
       
       <!-- Main Content -->
-      <div class="main-content">
+      <div class="main-content translucent-panel">
         <div class="form-container">
           <div class="form-box">
             <div class="input-group">
@@ -163,7 +165,7 @@ export default {
 
   data() {
     return {
-      idebarSearch: '',
+      sidebarSearch: '',
       orgName: '',
       recipientTitle: '',
       subject: '',
@@ -198,19 +200,20 @@ export default {
     
 
  // Update the organization in the global store if found
- const org = store.testOrganizations.find(
-        (o) => o.name.toLowerCase() === this.orgName.toLowerCase()
-      );
-      if (org) {
-        org.referenceNumber = this.referenceNumber;
-        org.date = this.date;
-      } else {
-        alert('Organization not found in Test Organizations');
-      }
+ const newEntry = {
+        name: this.orgName,
+        referenceNumber: this.referenceNumber,
+        date: this.date,
+        subject: this.subject,
+        recipientTitle: this.recipientTitle,
+        recipientName: this.recipientName,
+        senderDepartment: this.senderDepartment
+      };
+      
+      // Push the new entry to the global store
+      store.testOrganizations.push(newEntry);
+      alert(`Reference Generated: ${this.referenceNumber}`);
     },
-    goToTestOrganizations() {
-      this.$router.push({ name: 'TestOrganizations' });
-    }
   
   },
 
@@ -263,32 +266,52 @@ body, html {
   align-items: center;
 }
 .container {
-  background-image: url('@/assets/bg-pic.jpg');
+  min-height: 100vh;
+  width: 100vw;
+  background-image: url('@/assets/peaks-pic.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  margin: 8px;
+  background-attachment: fixed;
 }
 .title {
   text-align: center;
-  font-size: 1.5em;
+  font-size: 2em;
   margin-bottom: 20px;
   padding: 10px;
   background: darkblue;
   color: white;
-  border-radius: 5px;
+  padding:10px;
+  border-radius: 8px;
 }
+.translucent-panel {
+background: rgba(255,255,255,0.6);
+backdrop-filter: blur(10px);
+border-radius:10px;
+padding : 20px;
+box-shadow:0 4px 8px  rgba(0,0,0,0.1) ;
+transition: transform 0.3 ease;
+
+
+}
+.translucent-panel:hover{
+transform: translateY(-10px);
+
+}
+
+
 .content {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 .left-sidebar {
   flex: 1;
-  background: #f0f0f0;
   padding: 15px;
   border-radius: 8px;
   max-height: 80vh;
   overflow-y: auto;
+  max-width: 300px;
 }
 .sidebar-search {
   display: flex;
@@ -298,13 +321,13 @@ body, html {
 }
 .sidebar-search-input {
   flex: 1;
-  padding: 5px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 .add-btn, .delete-btn {
-  padding: 5px 10px;
-  border: none;
+  padding: 8px 12px;
+  border:1px solid #fff;
   border-radius: 5px;
   color: white;
   cursor: pointer;
@@ -368,6 +391,9 @@ body, html {
 .org-list li {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
   transition: background 0.3s ease;
 }
 .org-list li:hover {
@@ -392,6 +418,7 @@ body, html {
 }
 .main-content {
   flex: 2;
+  min-width:300px ;
 }
 .form-container {
   display: flex;
@@ -399,10 +426,11 @@ body, html {
   width: 100%;
 }
 .form-box {
-  width: 50%;
-  background: #f3f3f3;
+  width: 100%;
+  background: rgba(255,255,255,0.8);
   padding: 20px;
   border-radius: 10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15) ;
   margin-right: 20px;
   display: flex;
   flex-direction: column;
@@ -410,13 +438,16 @@ body, html {
 }
 .input-group {
   width: 100%;
+  display:flex;
+  flex-direction: column;
   margin-bottom: 10px;
 }
 .input-group label {
   font-weight: bold;
+  margin-bottom: 5px;
 }
 .input-group input, .input-group select {
-  width: 100%;
+width: 100px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -432,6 +463,10 @@ body, html {
   margin-top: 15px;
   border-radius: 20px;
   text-align: center;
+  transition: background 0.3s;
+}
+.generate-btn:hover{ 
+  background:darkblue;
 }
 .generator-container {
   max-width: 500px;
@@ -439,6 +474,7 @@ body, html {
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  
 }
 .input-group {
   margin-bottom: 10px;

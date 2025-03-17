@@ -9,6 +9,7 @@
           <th>Reference Number</th>
           <th>Subject</th>
           <th>RecipientTitle</th>
+          <th>RecipientName</th>
           <th>SenderDepartment</th>
 
 
@@ -21,6 +22,7 @@
           <td>{{ organization.referenceNumber }}</td>
           <td>{{ organization.subject}}</td>
           <td>{{ organization.recipientTitle}}</td>
+          <td>{{ organization.recipientName}}</td>
           <td>{{ organization.senderDepartment}}</td>
 
 
@@ -29,7 +31,10 @@
       </tbody>
     </table>
     <p v-else>Organization not found.</p>
-    <button @click="goBack" class="back-btn">Back</button>
+    <button @click= "goBack" >Back</button>
+    
+
+
   </div>
 </template>
 
@@ -55,6 +60,10 @@ export default {
       return this.$route.params.orgRecipientTitle;
     },
 
+    orgRecipientName() {
+      return this.$route.params.orgRecipientTitle;
+    },
+
     orgSenderDepartment() {
       return this.$route.params.orgSenderDepartment;
     },
@@ -65,20 +74,21 @@ export default {
 return store.testOrganizations.find(
         (org) => org.name.toLowerCase() === this.$route.params.orgName.toLowerCase()
       )
-
+    }
 
   },
+
   methods: {
-    goBack() {
-      this.$router.push({ name: 'ReferenceGenerator' });
+  goBack() {
+      this.$router.push({ name: 'TestOrganizations' });
     },
     viewOrganization(org) {
       // Navigate to the ViewOrganization route with the orgName in the URL
-      this.$router.push({ name: 'ReferenceGenerator', params: { orgName: org.name } });
+      this.$router.push({ name: 'ViewOrganization', params: { orgName: org.name } });
     }
   }
-}
 };
+
 </script>
 
 <style scoped>
@@ -86,13 +96,31 @@ return store.testOrganizations.find(
 .view-container {
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-image: url('@/assets/bg-pic.jpg');
+  background-image: url('@/assets/Tree-pic.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   margin: 8px;
 }
-.back-btn {
+
+/*.translucent-panel {
+background: rgba(255,255,255,0.6);
+backdrop-filter: blur(10px);
+border-radius:10px;
+padding : 20px;
+box-shadow:0 4px 8px  rgba(0,0,0,0.1) ;
+transition: transform 0.3 ease;
+
+}
+
+
+.translucent-panel:hover{
+transform: translateY(-100px);
+
+}*/
+
+
+.button {
   padding: 10px 20px;
   background: blue;
   color: white;
@@ -114,4 +142,7 @@ th {
   background-color: #ffffff;
 }
 
-</style>
+
+
+
+</style> 

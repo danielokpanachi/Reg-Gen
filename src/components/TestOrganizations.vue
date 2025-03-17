@@ -1,7 +1,20 @@
 <template>
   <div class = "container">
+
+    <div class = "right-sidebar">
+      <h3>Search for Organization</h3>
+    <div class="sidebar-search">
+          <input v-model="sidebarSearch" type="text" placeholder=" Search organisation" class="sidebar-search-input" />
+          <button @click="searchOrganization" class="search-btn">Search</button>
+          </div>
+        </div>
+
+
+
+
+
   <div>
-    <h2>Test Organizations</h2>
+    <h2>Test Organizations - Recently added</h2>
     <table>
       <thead>
         <tr>
@@ -10,6 +23,7 @@
           <th>Date</th>
           <th>Subject</th>
           <th>Recipient Title</th>
+          <th>Recipient Name</th>
           <th>Sender Department</th>
           <th>view</th>
 
@@ -23,6 +37,7 @@
           <td>{{ org.date }}</td>
           <td>{{ org.subject}}</td>
           <td>{{ org.recipientTitle}}</td>
+          <td>{{ org.recipientName}}</td>
           <td>{{ org.senderDepartment}}</td>
           <td>
             <button @click="viewOrganization(org)">View</button>
@@ -31,6 +46,12 @@
         </tr>
       </tbody>
     </table>
+
+   
+
+
+
+
     <button @click="goBack">Back</button>
   </div>
   </div>
@@ -46,21 +67,22 @@ export default {
     return { store };
   },
 
-  methods: {
+  
+ /* methods: {
     goBack() {
       this.$router.push({ name: 'ReferenceGenerator' });
     },
     viewOrganization(org) {
        //Navigate to the ViewOrganization page with org.name as a route parameter
       this.$router.push({ name: 'ViewOrganization', params: { orgName: org.name } });
-    },
+    },*/
 
 
   data() {
     return {
       testOrganizations: [
-        { name: '', referenceNumber: '', date: '2025-02-23', Subject: '', recipientTitle: '', senderDepartment: '',},
-        { name: '', referenceNumber: '', date: '2025-02-22', Subject: '', recipientTitle: '', senderDepartment: '',}
+        { name: '', referenceNumber: '', date: '2025-02-23', Subject: '', recipientTitle: '', recipientName: '', senderDepartment: ''},
+        { name: '', referenceNumber: '', date: '2025-02-22', Subject: '', recipientTitle: '', recipientName: '', senderDepartment: ''}
         // Add more organizations as needed
       ]
     };
@@ -74,8 +96,8 @@ export default {
       this.$router.push({ name: 'ViewOrganization', params: { orgName: org.name } });
     }
   }
-}
 };
+
 </script>
 
 
@@ -95,18 +117,40 @@ th {
 }
 button {
   padding: 5px 10px;
-  background: purple;
+  background: rgb(6,2, 253);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 .container {
-background-image: url('@/assets/bg-pic.jpg');
+background-image: url('@/assets/peaks-pic.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  margin: 8px;
+  margin: 50px;
 
 }
+
+.right-sidebar {
+  flex: 1;
+  padding: 15px;
+  border-radius: 8px;
+  max-height: 680vh;
+  overflow-y: auto;
+  max-width: 300px;
+}
+.sidebar-search {
+  display: flex;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.sidebar-search-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 </style>
