@@ -105,15 +105,20 @@ export default {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 th, td {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
 }
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 th {
   background-color: #f4f4f4;
+  color: rgb(0, 0, 0);
 }
 button {
   padding: 5px 10px;
@@ -122,6 +127,14 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+}
+
+button:active {
+    transform: scale(0.98); /* Subtle press effect */
 }
 .container {
 background-image: url('@/assets/peaks-pic.jpg');
