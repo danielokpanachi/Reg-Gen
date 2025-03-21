@@ -118,47 +118,6 @@
             <button @click="cancelAddPopup" class="close-btn">Close</button>
           </div>
         </div>
-
-
-
-
-
-
-
-
-<!-- Add Popup Div 
-<div v-if="showAddPopup" class="add-popup">
-          <div class="input-group">
-            <label>Organisation Code</label>
-            <input v-model="newOrgCode" type="text" placeholder="Enter organisation code" />
-          </div>
-          <div class="input-group">
-            <label>Drop down 1</label>
-            <select v-model="dropdown1">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Drop down 2</label>
-            <select v-model="dropdown2">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Drop down 3</label>
-            <select v-model="dropdown3">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <button @click="confirmAddPopup" class="confirm-btn">Confirm</button>
-          <button @click="cancelAddPopup" class="cancel-btn">Cancel</button>
-        </div> -->
       
     
 
@@ -182,13 +141,6 @@
         </div>
       
       </div>
-     
-
-
-
-
-      
-     
   </div>
 </template>
 
@@ -374,12 +326,7 @@ transform: translateY(-10px);
   gap: 20px;
   
 }
- /*.sidebar {
-  display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers children horizontally 
-    padding: 10px; 
-*/ 
+ 
   .search-popup {
     position: absolute;
   top: 30%; /* Adjust this value as needed to align below the search input */
@@ -417,9 +364,7 @@ transform: translateY(-10px);
   width: 90%;
   max-width: 400px;
 }
-/*.sidebar h3 {
-    text-align: center;
-    margin: 10px 0; /* Optional: Adds vertical spacing */
+
 
   .left-sidebar.translucent-panel > .left-sidebar {
   height: 300px; /* Adjust height as needed */
